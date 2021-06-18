@@ -1,7 +1,7 @@
 <template>
   <li :class="listClass">
     {{ transaction.name }}
-    <span>{{ minusOrPlus }}{{ Math.abs(transaction.amount) }} ks</span
+    <span>{{ minusOrPlus }}{{ formatAmount }} ks</span
     ><button class="delete-btn" @click="removeTransaction(transaction.id)">
       x
     </button>
@@ -23,7 +23,15 @@ export default {
       props.transaction.amount > 0 ? "+" : "-"
     );
 
-    return { listClass, minusOrPlus, removeTransaction };
+    const formatAmount = computed(() =>
+      formatCurrency(Math.abs(props.transaction.amount))
+    );
+
+    const formatCurrency = (number) => {
+      return number.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,");
+    };
+
+    return { listClass, minusOrPlus, removeTransaction, formatAmount };
   },
 };
 </script>
