@@ -1,0 +1,24 @@
+{
+  "transactions": [
+    {
+      "id": 1,
+      "name": "Cash",
+      "amount": -400
+    },
+    {
+      "id": 2,
+      "name": "Salary",
+      "amount": 100
+    },
+    {
+      "name": "Flower",
+      "amount": -1000,
+      "id": 4
+    },
+    {
+      "name": "Laptop",
+      "amount": 1000,
+      "id": 5
+    }
+  ]
+}

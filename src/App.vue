@@ -38,30 +38,29 @@ export default {
     BaseButton,
   },
   setup() {
-    const transactions = ref([
-      {
-        id: 1,
-        name: "Cash",
-        amount: -400,
-      },
-      {
-        id: 2,
-        name: "Salary",
-        amount: 100,
-      },
-      {
-        id: 3,
-        name: "Computer",
-        amount: -10000,
-      },
-    ]);
+    const transactions = ref([]);
 
-    const addTransaction = (transaction) => {
+    const getTransactions = async () => {
+      const res = await fetch("http://localhost:3000/transactions");
+      const data = await res.json();
+      transactions.value = data.reverse();
+    };
+    getTransactions();
+
+    const addTransaction = async (transaction) => {
       const newTransaction = {
         id: Math.floor(Math.random() * 10000000),
         ...transaction,
       };
-      transactions.value.unshift(newTransaction);
+      transactions.value.unshift({ ...newTransaction });
+      delete newTransaction.id;
+      await fetch("http://localhost:3000/transactions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newTransaction),
+      });
     };
 
     const showModel = ref(false);
@@ -72,6 +71,9 @@ export default {
         (transaction) => transaction.id === transactionId.value
       );
       transactions.value.splice(idx, 1);
+      fetch(`http://localhost:3000/transactions/${transactionId.value}`, {
+        method: "DELETE",
+      });
       confirmDelete();
     };
     const confirmDelete = (id) => {
