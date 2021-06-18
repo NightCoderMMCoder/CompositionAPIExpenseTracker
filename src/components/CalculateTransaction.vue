@@ -5,7 +5,9 @@
   <div class="inc-exp-container">
     <div>
       <h4>Income</h4>
-      <p id="money-plus" class="money plus">+{{ calcIncome }} ks</p>
+      <p id="money-plus" class="money plus">
+        {{ calcIncome !== "0.00" ? "+" : "" }}{{ calcIncome }} ks
+      </p>
     </div>
     <div>
       <h4>Expense</h4>

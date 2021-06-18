@@ -60,3 +60,11 @@ h4 {
 .error {
   color: red;
 }
+.btn-group button:nth-of-type(1) {
+  margin-right: 5px;
+}
+.flat {
+  background: transparent !important;
+  border: 2px solid #9c88ff !important;
+  color: #9c88ff !important;
+}
