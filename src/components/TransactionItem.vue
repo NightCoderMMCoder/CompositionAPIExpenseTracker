@@ -1,30 +1,32 @@
 <template>
-  <h3>History</h3>
-  <ul id="list" class="list">
-    <TransactionItem
-      v-for="transaction in transactions"
-      :key="transaction.id"
-      :transaction="transaction"
-    />
-  </ul>
+  <li :class="listClass">
+    {{ transaction.name }}
+    <span>{{ minusOrPlus }}{{ Math.abs(transaction.amount) }} ks</span
+    ><button class="delete-btn">x</button>
+  </li>
 </template>
 
 <script>
-import TransactionItem from "./TransactionItem.vue";
+import { computed } from "vue";
+
 export default {
-  components: { TransactionItem },
-  props: { transactions: Array },
+  props: { transaction: Object },
+  setup(props) {
+    const listClass = computed(() =>
+      props.transaction.amount > 0 ? "plus" : "minus"
+    );
+
+    const minusOrPlus = computed(() =>
+      props.transaction.amount > 0 ? "+" : "-"
+    );
+
+    return { listClass, minusOrPlus };
+  },
 };
 </script>
 
 <style scoped>
-.list {
-  list-style-type: none;
-  padding: 0;
-  margin-bottom: 40px;
-}
-
-.list li {
+li {
   background-color: #fff;
   box-shadow: var(--box-shadow);
   color: #333;
@@ -35,11 +37,11 @@ export default {
   margin: 10px 0;
 }
 
-.list li.plus {
+li.plus {
   border-right: 5px solid #2ecc71;
 }
 
-.list li.minus {
+li.minus {
   border-right: 5px solid #c0392b;
 }
 
@@ -59,7 +61,7 @@ export default {
   transition: opacity 0.3s ease;
 }
 
-.list li:hover .delete-btn {
+li:hover .delete-btn {
   opacity: 1;
 }
 </style>
