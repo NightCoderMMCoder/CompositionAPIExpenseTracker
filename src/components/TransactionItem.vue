@@ -38,6 +38,8 @@ li {
   position: relative;
   padding: 10px;
   margin: 10px 0;
+  transition: all 0.5s linear;
+  width: 100%;
 }
 
 li.plus {

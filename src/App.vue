@@ -1,6 +1,6 @@
 <template>
   <TheHeader />
-  <BaseDialog v-if="showModel">
+  <BaseDialog :show-model="showModel">
     <template #header>
       Just Checking...
     </template>
@@ -61,7 +61,7 @@ export default {
         id: Math.floor(Math.random() * 10000000),
         ...transaction,
       };
-      transactions.value.push(newTransaction);
+      transactions.value.unshift(newTransaction);
     };
 
     const showModel = ref(false);

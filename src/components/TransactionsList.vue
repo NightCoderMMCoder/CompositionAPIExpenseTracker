@@ -1,12 +1,12 @@
 <template>
   <h3>History</h3>
-  <ul id="list" class="list">
+  <transition-group name="slide" tag="ul">
     <TransactionItem
       v-for="transaction in transactions"
       :key="transaction.id"
       :transaction="transaction"
     />
-  </ul>
+  </transition-group>
 </template>
 
 <script>
@@ -18,48 +18,21 @@ export default {
 </script>
 
 <style scoped>
-.list {
+ul {
   list-style-type: none;
   padding: 0;
   margin-bottom: 40px;
-}
-
-.list li {
-  background-color: #fff;
-  box-shadow: var(--box-shadow);
-  color: #333;
-  display: flex;
-  justify-content: space-between;
   position: relative;
-  padding: 10px;
-  margin: 10px 0;
 }
-
-.list li.plus {
-  border-right: 5px solid #2ecc71;
-}
-
-.list li.minus {
-  border-right: 5px solid #c0392b;
-}
-
-.delete-btn {
-  cursor: pointer;
-  background-color: #e74c3c;
-  border: 0;
-  color: #fff;
-  font-size: 20px;
-  line-height: 20px;
-  padding: 2px 5px;
-  position: absolute;
-  top: 50%;
-  left: 0;
-  transform: translate(-100%, -50%);
+.slide-enter-from {
+  transform: translateX(-100px);
   opacity: 0;
-  transition: opacity 0.3s ease;
 }
-
-.list li:hover .delete-btn {
-  opacity: 1;
+.slide-leave-to {
+  transform: translateX(100px);
+  opacity: 0;
+}
+.slide-leave-active {
+  position: absolute;
 }
 </style>

@@ -1,26 +1,30 @@
 <template>
   <teleport to=".model">
-    <div class="backdrop"></div>
-    <div class="dialog">
-      <div class="card">
-        <div class="card-header">
-          <h3>
-            <slot name="header"></slot>
-          </h3>
-        </div>
-        <div class="card-body">
-          <slot name="body"> </slot>
-          <div class="btn-group">
-            <slot name="actions"> </slot>
+    <div class="backdrop" v-if="showModel"></div>
+    <transition name="slide-down">
+      <div class="dialog" v-if="showModel">
+        <div class="card">
+          <div class="card-header">
+            <h3>
+              <slot name="header"></slot>
+            </h3>
+          </div>
+          <div class="card-body">
+            <slot name="body"> </slot>
+            <div class="btn-group">
+              <slot name="actions"> </slot>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </transition>
   </teleport>
 </template>
 
 <script>
-export default {};
+export default {
+  props: { showModel: Boolean },
+};
 </script>
 
 <style scoped>
@@ -63,6 +67,6 @@ h3 {
 }
 .slide-down-enter-active,
 .slide-down-leave-active {
-  transition: all 0.5s ease-in-out;
+  transition: all 0.2s ease-in-out;
 }
 </style>
