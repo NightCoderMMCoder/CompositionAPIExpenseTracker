@@ -1,7 +1,7 @@
 <template>
   <TheHeader />
   <div class="container">
-    <CalculateTransaction />
+    <CalculateTransaction :transactions="transactions" />
     <TransactionsList :transactions="transactions" />
     <AddTransaction />
   </div>
@@ -31,7 +31,7 @@ export default {
       {
         id: 2,
         name: "Salary",
-        amount: 600000,
+        amount: 100,
       },
       {
         id: 3,

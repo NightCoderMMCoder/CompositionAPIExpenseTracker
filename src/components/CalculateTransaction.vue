@@ -1,21 +1,54 @@
 <template>
   <h4>Your Balance</h4>
-  <h1 id="balance">$0.00</h1>
+  <h1 id="balance">{{ calcTotalBalance }} ks</h1>
 
   <div class="inc-exp-container">
     <div>
       <h4>Income</h4>
-      <p id="money-plus" class="money plus">+$0.00</p>
+      <p id="money-plus" class="money plus">+{{ calcIncome }} ks</p>
     </div>
     <div>
       <h4>Expense</h4>
-      <p id="money-minus" class="money minus">-$0.00</p>
+      <p id="money-minus" class="money minus">{{ calcExpense }} ks</p>
     </div>
   </div>
 </template>
 
 <script>
-export default {};
+import { computed } from "vue";
+export default {
+  props: { transactions: Array },
+  setup(props) {
+    const calcTotalBalance = computed(() => {
+      let total = props.transactions.reduce(
+        (total, cur) => total + cur.amount,
+        0
+      );
+      return formatCurrency(total);
+    });
+
+    const calcIncome = computed(() => {
+      const incomeArray = props.transactions.filter(
+        (transaction) => transaction.amount > 0
+      );
+      const total = incomeArray.reduce((total, cur) => total + cur.amount, 0);
+      return formatCurrency(total);
+    });
+
+    const calcExpense = computed(() => {
+      const expenseArray = props.transactions.filter(
+        (transaction) => transaction.amount < 0
+      );
+      const total = expenseArray.reduce((total, cur) => total + cur.amount, 0);
+      return formatCurrency(total);
+    });
+
+    const formatCurrency = (number) => {
+      return number.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,");
+    };
+    return { calcTotalBalance, calcIncome, calcExpense };
+  },
+};
 </script>
 
 <style scoped>
