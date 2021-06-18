@@ -17,12 +17,14 @@
 </template>
 
 <script>
-import { computed } from "vue";
+import { computed, toRefs } from "vue";
 export default {
   props: { transactions: Array },
+  /* eslint-disable */
   setup(props) {
+    const { transactions } = toRefs(props);
     const calcTotalBalance = computed(() => {
-      let total = props.transactions.reduce(
+      let total = transactions.value.reduce(
         (total, cur) => total + cur.amount,
         0
       );
@@ -30,7 +32,7 @@ export default {
     });
 
     const calcIncome = computed(() => {
-      const incomeArray = props.transactions.filter(
+      const incomeArray = transactions.value.filter(
         (transaction) => transaction.amount > 0
       );
       const total = incomeArray.reduce((total, cur) => total + cur.amount, 0);
@@ -38,7 +40,7 @@ export default {
     });
 
     const calcExpense = computed(() => {
-      const expenseArray = props.transactions.filter(
+      const expenseArray = transactions.value.filter(
         (transaction) => transaction.amount < 0
       );
       const total = expenseArray.reduce((total, cur) => total + cur.amount, 0);
