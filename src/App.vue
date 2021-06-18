@@ -3,7 +3,7 @@
   <div class="container">
     <CalculateTransaction :transactions="transactions" />
     <TransactionsList :transactions="transactions" />
-    <AddTransaction />
+    <AddTransaction @add-transaction="addTransaction" />
   </div>
 </template>
 
@@ -39,7 +39,16 @@ export default {
         amount: -10000,
       },
     ]);
-    return { transactions };
+
+    const addTransaction = (transaction) => {
+      const newTransaction = {
+        id: Math.floor(Math.random() * 10000000),
+        ...transaction,
+      };
+      transactions.value.push(newTransaction);
+    };
+
+    return { transactions, addTransaction };
   },
 };
 </script>
